@@ -1,0 +1,16 @@
+# data
+data/
+
+# python
+venv/
+__pycache__/
+*.egg-info/
+
+# pytorch
+models/
+*.pth
+*.pt
+
+# OS
+.DS_Store
+
