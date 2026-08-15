@@ -1,118 +1,37 @@
-# Voxel: Own Your Scans
-
-A patient-centric, HIPAA-compliant iOS app for viewing medical imaging. Features a secure, offline AI to simplify radiology reports on-device.
-
-*Disclaimer: This app is intended for informational purposes only and does not provide medical advice or diagnoses. Additionally, AI can make mistakes. Always consult a qualified healthcare provider with any questions or concerns. This app is not intended for self-diagnosis or self-treatment and reliance on any information provided by the app is solely at your own risk.*
-
----
-
-## Demo & Link (Placeholders)
-
-**[View Voxel on the App Store (placeholder)](https://www.apple.com/app-store/)**
-
-![GIF of _____ on Voxel (placeholder)](screenshots/app1.gif)
-
-![GIF of _____ on Voxel (placeholder)](screenshots/app2.gif)
-
-![Screenshot of _____ on Voxel (placeholder)](screenshots/app3.png)
-
-![Screenshot of _____ on Voxel (placeholder)](screenshots/app4.png)
-
-![Screenshot of _____ on Voxel (placeholder)](screenshots/app5.png)
-
----
+# X-Ray Classifier
 
 ## Key Features
 
-### Clinical-Grade Imaging Viewer
-View X-rays, MRIs, and CT scans directly on your device.
-* **Versatile Viewing**: Easily open and view both medical DICOM files and standard image formats.
-* **Side-by-Side Comparison:** Open two different scans at once to see changes over time.
-* **Synchronized Scrolling:** Navigate through MRIs and CT scans smoothly across all angles to get a complete view.
-
-### Privacy-Focused Design
-Your sensitive health information never leaves your device.
-* **On-Device Storage:** All files and processing stay on your phone or computer, not in the cloud.
-* **Biometric Lock:** Secure your records with **Face ID** or **Touch ID** so only you can access them.
-
-### Smart Library Organization
-The app automatically categorizes and labels your medical files to eliminate manual sorting.
-* **Automatic Sorting:** Scans are instantly identified and grouped by body part and scan type.
-* **Fast Search:** Find specific results or dates in seconds using the built-in intelligent search.
-
-### VoxeLLM: Your Personal Health Assistant
-Understand your radiology reports without the medical jargon.
-* **Report Simplification:** Converts complex clinical language into plain, easy-to-understand English.
-* **Interactive Q&A:** Ask follow-up questions about your findings and get instant, clear explanations.
+* Classify X-Rays by anatomical region into 19 classes including "Other" for less common body parts.
+* Ability to handle inputs of JPEG, PNG, and DICOM files.
+* Maintain accuracy of over 95% in identifying anatomical region of X-Rays 
 
 ---
 
-## Personal Context
+## Model Engineering
 
-Since my cancer diagnosis, I have undergone countless imaging studies, sparking a deep personal interest in radiology. I wanted to analyze my scans outside the doctor's office, but faced significant barriers. The images were DICOM files, which required antiquated software designed for doctors, not patients. Additionally, the reports were full of medical terminology that was impossible to decipher without a medical background.
+**Goal:** Classify X-Ray imaging files anatomical region with >95% accuracy, with graceful handling of unrecognized imaging.
 
-I realized there was no solution built with the patient in mind. Something that would allow patients like myself to:
-* store scans and reports in one place regardless of provider,
-* view scans and compare them side-by-side to track changes, and
-* understand radiology reports using a local LLM.
-
-Voxel is my answer: a native iOS application designed to enable patients to access their medical scans. *Securely, privately, and intuitively.*
-
----
-
-## Model Engineering (Projected)
-
-### 1. ScanSort (Automatic Sorting)
-
-**Goal:** Classify medical imaging files by modality and anatomical region with >95% accuracy, with graceful handling of unrecognized imaging.
-
-* **Base Model:** _____
-* **Training:** Transfer learning on X+ imaging studies using PyTorch.
-  * *Achieved a X% reduction in training time by using RTX 5080 (compared to _____).* 
+* **Base Model:** ResNet18
+* **Training:** Transfer learning on 40,000+ imaging studies using PyTorch and Torchvision.
+  * Used an NVIDIA RTX 5080 GPU to speed up training. 
 * **Data Balancing:** Undersampled large datasets at 5,000 images and applied weighted loss techniques to smaller datasets.
-* **Target Classes *(incomplete)*:** Classifies the following 19 specific clinical views:
+* **Target Classes:** Classifies the following 19 specific clinical views:
   * **X-Ray:** Ankle, Chest, Elbow, Finger, Foot, Forearm, Hand, Hip, Humerus, Knee, Shoulder, Wrist, Other
 
-### 2. VoxeLLM (Radiology Report Chatbot)
-
-**Goal:** Summarize radiology reports and be able to answer medical queries related to the report while maximizing accuracy and minimizing hallucinations. 
-
-* **Base Model:** _____
-* **Training:** _____ fine-tuning on radiology report and medical datasets.
-  * *Achieved a X% reduction in training time by using RTX 5080 (compared to _____).* 
-* **Optimization:** _____ quantization to reduce memory usage by X% (from XGB to <XGB).
-* **Deployment:** Converted to CoreML format to utilize Apple Neural Engine (ANE) for offline inference.
-
-* *See "Training Data & Acknowledgements" below to see all datasets used in training.*
-
 ---
 
-## Tech Stack (Projected)
+## Tech Stack
 
-* **Languages:** Swift 6.2.3, Python 3.12
-* **iOS Frameworks:** SwiftUI, CoreML
-* **Python Libraries:** Kaggle, NumPy, Pandas, Pillow, PyDicom, TQDM
+* **Language:** Python 3.12
+* **Python Libraries:** Kaggle, NumPy, Pandas, Pillow, PyDicom, TQDM, PyTorch, Torchvision
 * **Hardware:** NVIDIA RTX 5080 (Training)
-* **Tools:** Xcode 26.2
 
 ---
 
-## Requirements (Placeholders)
+## Training Data & Acknowledgements
 
-* **iOS Development:** Swift X.X.X, Xcode XX.X
-* **Model Engineering:** Python X.X, *see `pyproject.toml` for list of Python libraries*
-  * *Note: Discrete NVIDIA GPU is recommended to improve training times.*
-* **Device and Software Version:** Apple iPhone XX or higher running iOS XX.X.X or higher. 
-  * *Note: Apple iPhone XX or higher is recommended to use AI features due to RAM limitations.*
-  * *Note: Apple iPhone XX or higher is required for biometric authentication.*
-
----
-
-## Training Data & Acknowledgements (Projected)
-
-### 1. ScanSort (Automatic Sorting)
-
-To train the model for ScanSort, all imaging study datasets were sourced from [Kaggle](https://www.kaggle.com). 
+All imaging study datasets were sourced from [Kaggle](https://www.kaggle.com). 
 
 * **[NIH Chest X-rays](https://www.kaggle.com/datasets/nih-chest-xrays/data)** by National Institutes of Health Chest X-Ray Dataset
   * Used for: X-Ray Chest
@@ -149,10 +68,6 @@ To train the model for ScanSort, all imaging study datasets were sourced from [K
   * Original Source: Kirkuk General Hospital
   * Citation: Taher, Osamah, and Kasım Özacar. "HeCapsNet: An enhanced capsule network for automated heel disease diagnosis using lateral foot X‐Ray images." International Journal of Imaging Systems and Technology 34.3 (2024): e23084.
   * License: [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
-
-### 2. VoxeLLM (Radiology Assistant)
-
-To train the model for VoxeLLM, 
 
 ---
 
