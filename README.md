@@ -2,7 +2,7 @@
 
 ## Key Features
 
-* Classify X-Rays by anatomical region into 19 classes including "Other" for less common body parts.
+* Classify X-Rays by anatomical region into 13 classes including "Other" for less common body parts.
 * Ability to handle inputs of JPEG, PNG, and DICOM files.
 * Maintain accuracy of over 95% in identifying anatomical region of X-Rays 
 
