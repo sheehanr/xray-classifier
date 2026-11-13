@@ -1,5 +1,9 @@
 # X-Ray Classifier
 
+A PyTorch model that identifies an X-ray’s anatomical region across 13 classes.
+
+---
+
 ## Key Features
 
 * Classify X-Rays by anatomical region into 13 classes including "Other" for less common body parts.
@@ -30,7 +34,7 @@
 
 ---
 
-## Setup & Usage
+## Local Setup & Usage
 
 Requires Python 3.12, an NVIDIA GPU with CUDA, and a [Kaggle API token](https://www.kaggle.com/docs/api).
 
@@ -96,9 +100,3 @@ Datasets were sourced from [Kaggle](https://www.kaggle.com) and [Stanford AIMI](
   * Original Source: Kirkuk General Hospital
   * Citation: Taher, Osamah, and Kasım Özacar. "HeCapsNet: An enhanced capsule network for automated heel disease diagnosis using lateral foot X‐Ray images." International Journal of Imaging Systems and Technology 34.3 (2024): e23084.
   * License: [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
-
----
-
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information. 
