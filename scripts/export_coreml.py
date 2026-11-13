@@ -47,7 +47,7 @@ def main():
         classifier_config=classifier_config,
     )
 
-    save_path = MODELS_DIR / "voxel_classifier.mlpackage"
+    save_path = MODELS_DIR / "xray_classifier.mlpackage"
     mlmodel.save(str(save_path))
 
 
