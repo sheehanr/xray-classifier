@@ -14,6 +14,9 @@ DATA_DIR = (SCRIPT_DIR / "../../data").resolve()
 TRAIN_DIR = DATA_DIR / "train"
 VAL_DIR = DATA_DIR / "val"
 
+MODELS_DIR = (SCRIPT_DIR / "../../models").resolve()
+WTS_PATH = MODELS_DIR / "best_acc_model.pth"
+
 CROP_SIZE = 224  # preprocessing scripts made images 256x256
 BATCH_SIZE = 32
 NUM_EPOCHS = 10
@@ -118,7 +121,7 @@ def train_model(model, dataloaders, image_datasets, criterion, optimizer, device
                 best_acc = epoch_acc
                 best_wts = copy.deepcopy(model.state_dict())
 
-                torch.save(model.state_dict(), "best_acc_model.pth")
+                torch.save(model.state_dict(), WTS_PATH)
 
     print(f"\nTraining complete. Best accuracy: {best_acc:.4f}")
 
@@ -127,6 +130,8 @@ def train_model(model, dataloaders, image_datasets, criterion, optimizer, device
 
 
 def main():
+    MODELS_DIR.mkdir(parents=True, exist_ok=True)
+
     image_datasets, dataloaders = setup_data(CROP_SIZE, TRAIN_DIR, VAL_DIR, BATCH_SIZE)
     class_names = image_datasets["train"].classes
     num_classes = len(class_names)
